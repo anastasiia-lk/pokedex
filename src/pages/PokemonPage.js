@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Card, Row, Col, ProgressBar } from 'react-bootstrap';
+import { Card, Row, Col, ProgressBar, ListGroup } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 //Components
@@ -156,6 +156,34 @@ const PokemonPage = ({ match }) => {
                       />
                     </div>
                   ))}
+                </Row>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+            <Card
+              className="p-3 rounded text-center shadow p-3 mb-5 bg-white"
+              style={{ border: 'none' }}
+            >
+              <Card.Body>
+                <Row className="mt-4 text-center">
+                  <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <div
+                      className="px-4 py-1 rounded"
+                      style={{ border: '1px black solid' }}
+                    >
+                      Moves
+                    </div>
+                  </Col>
+                </Row>
+                <Row className="text-center ">
+                  <ListGroup>
+                    {pokemonDetails.moves.map((a, key) => (
+                      <ListGroup.Item>
+                        {a.move.name.toUpperCase()}
+                      </ListGroup.Item>
+                    ))}
+                  </ListGroup>
                 </Row>
               </Card.Body>
             </Card>
