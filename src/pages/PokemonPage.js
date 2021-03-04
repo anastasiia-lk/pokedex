@@ -9,7 +9,7 @@ import Loader from '../components/Loader';
 const PokemonPage = ({ match }) => {
   const id = match.params.id;
   const [pokemonDetails, setPokemonDetails] = useState();
-  const [pokemonEvolutionDetails, setPokemonEvolutionDetails] = useState();
+  // const [pokemonEvolutionDetails, setPokemonEvolutionDetails] = useState();
   const [loading, setLoading] = useState('true');
 
   // const getPokemon = async (id) => {
@@ -22,7 +22,7 @@ const PokemonPage = ({ match }) => {
     const details = await getPokemonData(id);
     const evolutions = await getPokemonEvolutionData(id);
     setPokemonDetails(details.data);
-    setPokemonEvolutionDetails(evolutions.data);
+    // setPokemonEvolutionDetails(evolutions.data);
     setLoading(false);
     console.log(evolutions.data);
   };
@@ -32,13 +32,69 @@ const PokemonPage = ({ match }) => {
     return res;
   };
 
+  // const getEvolutionList = (obj) => {
+  //   const values = Object.values(obj);
+  //   const output = [];
+
+  //   values.forEach((val) => {
+  //     // val != 'species' && typeof val === 'object'
+  //     val && val === 'object' &&
+  //       ? getEvolutionList(obj)
+  //       : output.push(val.name);
+  //   });
+
+  //   return output;
+  // };
+
+  const getEvolutionList = async (obj) => {
+    let output = [];
+    let val = Object.values(obj);
+    output.push(val[3].name);
+    let val_1 = Object.values(val[1]);
+    output.push(val_1[0].species.name);
+    let val_2 = Object.values(val_1[0].evolves_to)
+      ? Object.values(val_1[0].evolves_to)
+      : [];
+    // let val_2 = Object.values(val_1[0].evolves_to);
+    output.push(val_2[0].species.name);
+    // let val_1 = Object.values(val[0].evolves_to);
+    // output.push(val_1[0].species.name);
+    // let val_2 = Object.values(val_1[0].evolves_to);
+    // output.push(val_2[0].species.name);
+
+    // await values.forEach(
+    //   (val) =>
+    //     val.species.name
+    //       ? output.push(val.species.name)
+    //       : getEvolutionList(val.evolves_to),
+    // val != 'species' && typeof val === 'object'
+    // val.name ? getEvolutionList(val) : output.push(val.name);
+    // );
+
+    return output;
+  };
+
   const getPokemonEvolutionData = async () => {
     const response = await fetch(
       `https://pokeapi.co/api/v2/pokemon-species/${id}`,
     );
     const results = await response.json();
     console.log(results.evolution_chain.url);
-    return response;
+    const res = await fetch(`${results.evolution_chain.url}`);
+    const res_1 = await res.json();
+    // console.log(res_1);
+    // console.log(res_1.chain.evolves_to[0].species.name);
+    console.log(res_1.chain);
+    console.log(Object.values(res_1.chain));
+    const x = await getEvolutionList(res_1.chain);
+    console.log(x);
+    // const x = Object.values(res_1.chain);
+    // const y = Object.keys(res_1.chain);
+    // console.log(x);
+    // console.log(y);
+    // const list = await getEvolutionList(res_1.chain);
+
+    return res;
   };
 
   useEffect(() => {
