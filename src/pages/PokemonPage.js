@@ -9,7 +9,7 @@ import Loader from '../components/Loader';
 const PokemonPage = ({ match }) => {
   const id = match.params.id;
   const [pokemonDetails, setPokemonDetails] = useState();
-  // const [pokemonEvolutionDetails, setPokemonEvolutionDetails] = useState();
+  const [pokemonEvolutionDetails, setPokemonEvolutionDetails] = useState();
   const [loading, setLoading] = useState('true');
 
   // const getPokemon = async (id) => {
@@ -93,7 +93,7 @@ const PokemonPage = ({ match }) => {
     // console.log(x);
     // console.log(y);
     // const list = await getEvolutionList(res_1.chain);
-
+    setPokemonEvolutionDetails(x);
     return res;
   };
 
@@ -281,7 +281,9 @@ const PokemonPage = ({ match }) => {
                 </Row>
                 <Row className="text-center ">
                   <ListGroup>
-                    <ListGroup.Item></ListGroup.Item>
+                    {pokemonEvolutionDetails.map((a, key) => (
+                      <ListGroup.Item>{a.toUpperCase()}</ListGroup.Item>
+                    ))}
                   </ListGroup>
                 </Row>
               </Card.Body>
