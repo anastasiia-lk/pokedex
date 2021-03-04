@@ -9,17 +9,36 @@ import Loader from '../components/Loader';
 const PokemonPage = ({ match }) => {
   const id = match.params.id;
   const [pokemonDetails, setPokemonDetails] = useState();
+  const [pokemonEvolutionDetails, setPokemonEvolutionDetails] = useState();
   const [loading, setLoading] = useState('true');
+
+  // const getPokemon = async (id) => {
+  //   const details = await getPokemonData(id);
+  //   setPokemonDetails(details.data);
+  //   setLoading(false);
+  // };
 
   const getPokemon = async (id) => {
     const details = await getPokemonData(id);
+    const evolutions = await getPokemonEvolutionData(id);
     setPokemonDetails(details.data);
+    setPokemonEvolutionDetails(evolutions.data);
     setLoading(false);
+    console.log(evolutions.data);
   };
 
   const getPokemonData = async (id) => {
     const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
     return res;
+  };
+
+  const getPokemonEvolutionData = async () => {
+    const response = await fetch(
+      `https://pokeapi.co/api/v2/pokemon-species/${id}`,
+    );
+    const results = await response.json();
+    console.log(results.evolution_chain.url);
+    return response;
   };
 
   useEffect(() => {
@@ -183,6 +202,30 @@ const PokemonPage = ({ match }) => {
                         {a.move.name.toUpperCase()}
                       </ListGroup.Item>
                     ))}
+                  </ListGroup>
+                </Row>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+            <Card
+              className="p-3 rounded text-center shadow p-3 mb-5 bg-white"
+              style={{ border: 'none' }}
+            >
+              <Card.Body>
+                <Row className="mt-4 text-center">
+                  <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <div
+                      className="px-4 py-1 rounded"
+                      style={{ border: '1px black solid' }}
+                    >
+                      Evolutions
+                    </div>
+                  </Col>
+                </Row>
+                <Row className="text-center ">
+                  <ListGroup>
+                    <ListGroup.Item></ListGroup.Item>
                   </ListGroup>
                 </Row>
               </Card.Body>
