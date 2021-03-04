@@ -86,28 +86,28 @@ const PokemonPage = ({ match }) => {
     return res;
   };
 
-  const getPokemonEvolutionData_1 = async (id) => {
-    const response = await fetch(
-      `https://pokeapi.co/api/v2/pokemon-species/${id}`,
-    );
-    const results = await response.json();
-    console.log(results.evolution_chain.url);
-    const res = await fetch(`${results.evolution_chain.url}`);
-    const res_1 = await res.json();
-    // console.log(res_1);
-    // console.log(res_1.chain.evolves_to[0].species.name);
-    console.log(res_1.chain);
-    console.log(Object.values(res_1.chain));
-    const x = await getEvolutionList(res_1.chain);
-    // console.log(x);
-    // const x = Object.values(res_1.chain);
-    // const y = Object.keys(res_1.chain);
-    // console.log(x);
-    // console.log(y);
-    // const list = await getEvolutionList(res_1.chain);
-    // setPokemonEvolutionDetails(x);
-    return x;
-  };
+  // const getPokemonEvolutionData_1 = async (id) => {
+  //   const response = await fetch(
+  //     `https://pokeapi.co/api/v2/pokemon-species/${id}`,
+  //   );
+  //   const results = await response.json();
+  //   console.log(results.evolution_chain.url);
+  //   const res = await fetch(`${results.evolution_chain.url}`);
+  //   const res_1 = await res.json();
+  //   // console.log(res_1);
+  //   // console.log(res_1.chain.evolves_to[0].species.name);
+  //   console.log(res_1.chain);
+  //   console.log(Object.values(res_1.chain));
+  //   const x = await getEvolutionList(res_1.chain);
+  //   // console.log(x);
+  //   // const x = Object.values(res_1.chain);
+  //   // const y = Object.keys(res_1.chain);
+  //   // console.log(x);
+  //   // console.log(y);
+  //   // const list = await getEvolutionList(res_1.chain);
+  //   // setPokemonEvolutionDetails(x);
+  //   return x;
+  // };
 
   useEffect(() => {
     const getPokemon = async (id) => {
