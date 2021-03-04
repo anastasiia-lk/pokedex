@@ -18,14 +18,14 @@ const PokemonPage = ({ match }) => {
   //   setLoading(false);
   // };
 
-  const getPokemon = async (id) => {
-    const details = await getPokemonData(id);
-    const evolutions = await getPokemonEvolutionData(id);
-    setPokemonDetails(details.data);
-    // setPokemonEvolutionDetails(evolutions.data);
-    setLoading(false);
-    console.log(evolutions.data);
-  };
+  // const getPokemon = async (id) => {
+  //   const details = await getPokemonData(id);
+  //   const evolutions = await getPokemonEvolutionData(id);
+  //   setPokemonDetails(details.data);
+  //   // setPokemonEvolutionDetails(evolutions.data);
+  //   setLoading(false);
+  //   console.log(evolutions.data);
+  // };
 
   const getPokemonData = async (id) => {
     const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
@@ -46,7 +46,7 @@ const PokemonPage = ({ match }) => {
   //   return output;
   // };
 
-  const getEvolutionList = async (obj) => {
+  const getEvolutionList = (obj) => {
     let output = [];
     let val = Object.values(obj);
     output.push(val[3].name);
@@ -74,7 +74,19 @@ const PokemonPage = ({ match }) => {
     return output;
   };
 
-  const getPokemonEvolutionData = async () => {
+  const getPokemonEvolutionData = async (id) => {
+    const res = await axios.get(
+      `https://pokeapi.co/api/v2/pokemon-species/${id}`,
+    );
+    return res;
+  };
+
+  const getPokemonEvolutionDataDetail = async (id) => {
+    const res = await axios.get(`${id}`);
+    return res;
+  };
+
+  const getPokemonEvolutionData_1 = async (id) => {
     const response = await fetch(
       `https://pokeapi.co/api/v2/pokemon-species/${id}`,
     );
@@ -87,19 +99,40 @@ const PokemonPage = ({ match }) => {
     console.log(res_1.chain);
     console.log(Object.values(res_1.chain));
     const x = await getEvolutionList(res_1.chain);
-    console.log(x);
+    // console.log(x);
     // const x = Object.values(res_1.chain);
     // const y = Object.keys(res_1.chain);
     // console.log(x);
     // console.log(y);
     // const list = await getEvolutionList(res_1.chain);
-    setPokemonEvolutionDetails(x);
-    return res;
+    // setPokemonEvolutionDetails(x);
+    return x;
   };
 
   useEffect(() => {
+    const getPokemon = async (id) => {
+      const details = await getPokemonData(id);
+      const evolutions = await getPokemonEvolutionData(id);
+      const evolutionsDetails = await getPokemonEvolutionDataDetail(
+        evolutions.data.evolution_chain.url,
+      );
+      let output = [];
+      let val = Object.values(evolutionsDetails.data.chain);
+      output.push(val[3].name);
+      let val_1 = Object.values(val[1]);
+      output.push(val_1[0].species.name);
+      let val_2 = Object.values(val_1[0].evolves_to)
+        ? Object.values(val_1[0].evolves_to)
+        : [];
+      // let val_2 = Object.values(val_1[0].evolves_to);
+      output.push(val_2[0].species.name);
+      setPokemonDetails(details.data);
+      setPokemonEvolutionDetails(output);
+      setLoading(false);
+      console.log(evolutions.data);
+    };
     getPokemon(id);
-  }, []);
+  }, [id]);
 
   return (
     <>

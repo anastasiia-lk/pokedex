@@ -10,15 +10,15 @@ export default function Homepage() {
   const [pokemon, setPokemon] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const getPokemonList = async () => {
-    let pokemonArray = [];
-    for (let i = 1; i <= 151; i++) {
-      pokemonArray.push(await getPokemonData(i));
-    }
-    console.log(pokemonArray);
-    setPokemon(pokemonArray);
-    setLoading(false);
-  };
+  // const getPokemonList = async () => {
+  //   let pokemonArray = [];
+  //   for (let i = 1; i <= 151; i++) {
+  //     pokemonArray.push(await getPokemonData(i));
+  //   }
+  //   console.log(pokemonArray);
+  //   setPokemon(pokemonArray);
+  //   setLoading(false);
+  // };
 
   const getPokemonData = async (id) => {
     const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
@@ -26,6 +26,16 @@ export default function Homepage() {
   };
 
   useEffect(() => {
+    // getPokemonList();
+    const getPokemonList = async () => {
+      let pokemonArray = [];
+      for (let i = 1; i <= 151; i++) {
+        pokemonArray.push(await getPokemonData(i));
+      }
+      console.log(pokemonArray);
+      setPokemon(pokemonArray);
+      setLoading(false);
+    };
     getPokemonList();
   }, []);
 
