@@ -46,33 +46,33 @@ const PokemonPage = ({ match }) => {
   //   return output;
   // };
 
-  const getEvolutionList = (obj) => {
-    let output = [];
-    let val = Object.values(obj);
-    output.push(val[3].name);
-    let val_1 = Object.values(val[1]);
-    output.push(val_1[0].species.name);
-    let val_2 = Object.values(val_1[0].evolves_to)
-      ? Object.values(val_1[0].evolves_to)
-      : [];
-    // let val_2 = Object.values(val_1[0].evolves_to);
-    output.push(val_2[0].species.name);
-    // let val_1 = Object.values(val[0].evolves_to);
-    // output.push(val_1[0].species.name);
-    // let val_2 = Object.values(val_1[0].evolves_to);
-    // output.push(val_2[0].species.name);
+  // const getEvolutionList = (obj) => {
+  //   let output = [];
+  //   let val = Object.values(obj);
+  //   output.push(val[3].name);
+  //   let val_1 = Object.values(val[1]);
+  //   output.push(val_1[0].species.name);
+  //   let val_2 = Object.values(val_1[0].evolves_to)
+  //     ? Object.values(val_1[0].evolves_to)
+  //     : [];
+  //   // let val_2 = Object.values(val_1[0].evolves_to);
+  //   output.push(val_2[0].species.name);
+  // let val_1 = Object.values(val[0].evolves_to);
+  // output.push(val_1[0].species.name);
+  // let val_2 = Object.values(val_1[0].evolves_to);
+  // output.push(val_2[0].species.name);
 
-    // await values.forEach(
-    //   (val) =>
-    //     val.species.name
-    //       ? output.push(val.species.name)
-    //       : getEvolutionList(val.evolves_to),
-    // val != 'species' && typeof val === 'object'
-    // val.name ? getEvolutionList(val) : output.push(val.name);
-    // );
+  // await values.forEach(
+  //   (val) =>
+  //     val.species.name
+  //       ? output.push(val.species.name)
+  //       : getEvolutionList(val.evolves_to),
+  // val != 'species' && typeof val === 'object'
+  // val.name ? getEvolutionList(val) : output.push(val.name);
+  // );
 
-    return output;
-  };
+  //   return output;
+  // };
 
   const getPokemonEvolutionData = async (id) => {
     const res = await axios.get(
